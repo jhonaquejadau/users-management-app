@@ -1,18 +1,12 @@
-import { useState } from 'react'
-import Component1 from './components/Component1'
-import Component2 from './components/Component2'
-import './App.css'
+import "./App.css";
+import { Auth } from "./pages/auth/Auth";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
-      <p className='text-3xl'>User App Management / Redux-Toolkit</p> 
-      <Component2/>
-      <Component1/>
+      <Auth />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
