@@ -1,14 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import AuthBackground from "../../components/AuthBackground";
-import { LogIn } from "./LogIn";
-import { LogOut } from "./LogOut";
+import { AuthLogIn } from "./AuthLogIn";
 
 export const Auth = () => {
   return (
-    <div className="w-full h-screen relative border-2">
+    <div className="w-full h-full relative border-2 flex justify-center items-center">
       <AuthBackground />
-      <LogIn />
+      <AuthLogIn />
     </div>
   );
 };
