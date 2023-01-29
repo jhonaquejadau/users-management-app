@@ -10,5 +10,5 @@ export default defineConfig({
     }
   },
   plugins: [react()],
-  base: '/users-management-app/'
+  base: '/users-management-app'
 })
