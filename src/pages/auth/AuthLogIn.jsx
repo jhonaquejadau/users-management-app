@@ -1,17 +1,32 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormInputs } from "../components/auth/FormInputs";
 import { logInInputs } from "../../utilities";
+import { auth } from "../../database/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const AuthLogIn = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+  const [created, setCreated] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValues({ email: "", password: "" });
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        console.log(userCredential);
+        setCreated(true);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    if (created) {
+      setValues({ email: "", password: "" });
+      navigate('/home')
+    }
   };
 
   const handleChange = (e) => {

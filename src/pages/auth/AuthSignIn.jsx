@@ -2,8 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { signInInputs } from "../../utilities";
 import { FormInputs } from "../components/auth/FormInputs";
+import { auth } from "../../database/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export const AuthSignIn = () => {
+  const [error, setError] = useState("");
+  const [created, setCreated] = useState(false);
   const [values, setValues] = useState({
     name: "",
     lastname: "",
@@ -11,16 +16,30 @@ export const AuthSignIn = () => {
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValues({
-      name: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+    createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        console.log(userCredential);
+        setCreated(true);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setError(error.message);
+      });
+
+    if (created) {
+      setValues({
+        name: "",
+        lastname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      navigate("/");
+    }
   };
 
   const handleChange = (e) => {
